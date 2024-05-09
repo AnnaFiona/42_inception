@@ -1,0 +1,14 @@
+docker compose --help
+Command: create      Creates containers for a service
+
+"https://stackoverflow.com/questions/37966552/what-is-the-difference-between-docker-and-docker-compose":
+Since this answer was posted, docker has added a second use of docker-compose.yml files. Starting with the version 3 yml format and docker 1.13, you can use the yml with docker-compose and also to define a stack in docker's swarm mode. To do the latter you need to use docker stack deploy -c docker-compose.yml  instead of docker-compose up and then manage the stack with docker commands instead of docker-compose commands. The mapping is a one for one between the two uses:...
+
+
+
+
+https://docker-curriculum.com/:
+
+to show all existing containers: "docker ps -a"
+to delete all exited containers: "docker rm $(docker ps -a -q -f status=exited)"
+to delete containers: "docker rm 305297d7a235 ff0a5c3750b9"

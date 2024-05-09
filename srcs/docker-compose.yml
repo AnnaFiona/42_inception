@@ -22,7 +22,11 @@ services:
 # NGINX:
 
   mariadb:
-    image: mariadb
+
+    build: ./MariaDB/Dockerfile
+    image: annafiona/mariadb
+    container_name: maria
+
     restart: always #?
     ports:
       - 3306:3306
