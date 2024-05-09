@@ -1,0 +1,64 @@
+version: '3.1'
+services:
+  wordpress:
+    depends_on:
+      - mariadb
+    image: wordpress:6.2.2-apache
+    restart: always #?
+    ports:
+      - 8080:80 #?
+    env_file: .env
+    environment:
+      WORDPRESS_DB_HOST: mariadb:3306
+      WORDPRESS_DB_NAME: '${MYSQL_DATABASE}'
+      WORDPRESS_DB_USER: '${MYSQL_USER}'
+      WORDPRESS_DB_PASSWORD: '${MYSQL_PASSWORD}'
+    volumes:
+      - ./:/var/www/html
+    networks: 
+      - inception
+
+
+# NGINX:
+
+  mariadb:
+    image: mariadb
+    restart: always #?
+    ports:
+      - 3306:3306
+    env_file: .env
+    environment:
+      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
+      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
+      MYSQL_DATABASE: '${MYSQL_DATABASE}'
+      MYSQL_USER: '${MYSQL_USER}'
+
+    volumes:
+      - /home/nba/data/website_files:/var/lib/website_files
+    networks:
+      - inception
+
+
+###############from tutorial
+  phpmyadmin:
+    depends_on:
+      - mariadb
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 8081:80
+    env_file: .env
+    environment:
+      PMA_HOST: mariadb
+      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
+    networks:
+      - inception
+#################
+
+networks: #allowed?
+  inception:
+    driver: bridge
+
+volumes:
+  website_files:
+  wordpress_db:
