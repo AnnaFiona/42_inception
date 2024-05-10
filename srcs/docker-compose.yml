@@ -27,6 +27,8 @@ services:
     image: annafiona/mariadb
     container_name: maria
 
+    #image: mariadb
+
     restart: always #?
     ports:
       - 3306:3306
