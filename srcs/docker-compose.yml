@@ -14,7 +14,7 @@ services:
       WORDPRESS_DB_USER: '${MYSQL_USER}'
       WORDPRESS_DB_PASSWORD: '${MYSQL_PASSWORD}'
     volumes:
-      - ./:/var/www/html
+      - wp_website_files:/var/www/html
     networks: 
       - inception
 
@@ -23,7 +23,7 @@ services:
 
   mariadb:
 
-    build: ./MariaDB/Dockerfile
+    build: ./MariaDB/
     image: annafiona/mariadb
     container_name: maria
 
@@ -40,7 +40,7 @@ services:
       MYSQL_USER: '${MYSQL_USER}'
 
     volumes:
-      - /home/nba/data/website_files:/var/lib/website_files
+      - wp_db:/var/lib/mysql
     networks:
       - inception
 
@@ -66,5 +66,5 @@ networks: #allowed?
     driver: bridge
 
 volumes:
-  website_files:
-  wordpress_db:
+  wp_website_files:  #needs to be in a folder (subject!!!) in host machine (vm)?!
+  wp_db: #mariadb    #needs to be in a folder (subject!!!) in host machine (vm)?!
