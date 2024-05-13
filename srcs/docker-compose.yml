@@ -3,7 +3,13 @@ services:
   wordpress:
     depends_on:
       - mariadb
-    image: wordpress:6.2.2-apache
+
+    build: ./WordPress/
+    image: annafiona/wordpress
+    container_name: wordpress
+
+    #image: wordpress:6.2.2-apache
+
     restart: always #?
     ports:
       - 8080:80 #?
