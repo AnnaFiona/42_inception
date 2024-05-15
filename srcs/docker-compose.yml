@@ -26,6 +26,25 @@ services:
 
 
 # NGINX:
+  nginx:
+    build: ./NGINX/
+    image: annafiona/nginx
+    container_name: nginx
+
+    restart: always
+    ports:
+      - 443:443
+      - 9000:80
+    env_file: .env
+    environment:
+      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
+      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
+      MYSQL_DATABASE: '${MYSQL_DATABASE}'
+      MYSQL_USER: '${MYSQL_USER}'
+    volumes:
+      - wp_website_files:/var/www/html
+    networks:
+      - inception
 
   mariadb:
 
@@ -52,19 +71,19 @@ services:
 
 
 ###############from tutorial
-  phpmyadmin:
-    depends_on:
-      - mariadb
-    image: phpmyadmin/phpmyadmin
-    restart: always
-    ports:
-      - 8081:80
-    env_file: .env
-    environment:
-      PMA_HOST: mariadb
-      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
-    networks:
-      - inception
+#  phpmyadmin:
+#    depends_on:
+#      - mariadb
+#    image: phpmyadmin/phpmyadmin
+#    restart: always
+#    ports:
+#      - 8081:80
+#    env_file: .env
+#    environment:
+#      PMA_HOST: mariadb
+#      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
+#    networks:
+#      - inception
 #################
 
 networks: #allowed?

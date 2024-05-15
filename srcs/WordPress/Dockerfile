@@ -1,12 +1,14 @@
 FROM debian:12.5
 
 RUN apt-get -qq update
-RUN apt-get install -yqq wordpress php php-fpm wget
+RUN apt-get install -yqq wordpress php php-fpm wget coreutils
 
-WORKDIR /var/www/html/
+WORKDIR /usr/src/
 
-COPY setup_wp.bash /var/www/html/setup_wp.bash
+COPY setup_wp.bash .
+COPY wp-config.php .
+RUN chmod 777 setup_wp.bash
 
 EXPOSE 3306 9000
 
-ENTRYPOINT ["/var/www/html/setup_wp.bash"]
+ENTRYPOINT ["./setup_wp.bash"]
