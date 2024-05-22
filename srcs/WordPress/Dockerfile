@@ -9,6 +9,6 @@ COPY setup_wp.bash .
 COPY wp-config.php .
 RUN chmod 777 setup_wp.bash
 
-EXPOSE 3306 9000
+EXPOSE 9000
 
 ENTRYPOINT ["./setup_wp.bash"]

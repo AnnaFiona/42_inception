@@ -8,11 +8,9 @@ services:
     image: annafiona/wordpress
     container_name: wordpress
 
-    #image: wordpress:6.2.2-apache
-
     restart: always #?
     ports:
-      - 8080:80 #?
+      - 9000:9000 #?
     env_file: .env
     environment:
       WORDPRESS_DB_HOST: mariadb:3306
@@ -27,14 +25,15 @@ services:
 
 # NGINX:
   nginx:
+    depends_on:
+      - wordpress
     build: ./NGINX/
     image: annafiona/nginx
     container_name: nginx
 
     restart: always
     ports:
-      - 443:443
-      - 9000:80
+      - 443:80
     env_file: .env
     environment:
       MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'

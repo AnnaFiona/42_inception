@@ -7,7 +7,6 @@ RUN apt-get install -yqq mariadb-server
 WORKDIR /usr/src/
 
 COPY run_maria.bash .
-COPY create_users.sql .
 COPY 50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 EXPOSE 3306

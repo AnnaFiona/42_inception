@@ -19,4 +19,5 @@ if ! [ -f "/var/www/html/wordpress/wp-config.php" ]; then
     cp wp-config.php /var/www/html/wordpress
 fi
 
+/etc/init.d/php8.2-fpm start
 sleep infinity

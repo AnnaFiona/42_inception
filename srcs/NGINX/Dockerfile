@@ -6,10 +6,10 @@ RUN apt-get install -yqq nano
 
 #index.html isn't in volume?
 COPY index.html /var/www/html 
-COPY useless /etc/nginx/conf.d
+COPY useless.conf /etc/nginx/conf.d
 COPY wordpress.conf /etc/nginx/conf.d
 COPY nginx.conf /etc/nginx
 
-EXPOSE 8080
+EXPOSE 443
 
 CMD ["nginx", "-g", "daemon off;"]
