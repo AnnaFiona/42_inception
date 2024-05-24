@@ -7,6 +7,7 @@ WORKDIR /usr/src/
 
 COPY setup_wp.bash .
 COPY wp-config.php .
+COPY www.conf /etc/php/8.2/fpm/pool.d/
 RUN chmod 777 setup_wp.bash
 
 EXPOSE 9000
