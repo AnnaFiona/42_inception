@@ -20,4 +20,5 @@ sysprune:
 
 fclean: down sysprune
 	docker rmi annafiona/mariadb annafiona/nginx annafiona/wordpress
+	make rmv
 	make down

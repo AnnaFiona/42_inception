@@ -1,7 +1,7 @@
 FROM debian:12.5
 
 RUN apt-get -qq update
-RUN apt-get install -yqq wordpress php php-fpm wget coreutils
+RUN apt-get install -yqq wordpress php php-fpm wget coreutils curl
 
 WORKDIR /usr/src/
 

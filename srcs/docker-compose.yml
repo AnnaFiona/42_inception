@@ -1,5 +1,29 @@
 version: '3.1'
 services:
+
+  mariadb:
+    build: ./MariaDB/
+    image: annafiona/mariadb
+    container_name: maria
+
+    #image: mariadb
+
+    restart: always #?
+    ports:
+      - 3306:3306
+    env_file: .env
+    environment:
+      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
+      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
+      MYSQL_DATABASE: '${MYSQL_DATABASE}'
+      MYSQL_USER: '${MYSQL_USER}'
+
+    volumes:
+      - wp_db:/var/lib/mysql
+    networks:
+      - inception
+
+
   wordpress:
     depends_on:
       - mariadb
@@ -23,7 +47,6 @@ services:
       - inception
 
 
-# NGINX:
   nginx:
     depends_on:
       - wordpress
@@ -44,46 +67,6 @@ services:
       - wp_website_files:/var/www/html
     networks:
       - inception
-
-  mariadb:
-
-    build: ./MariaDB/
-    image: annafiona/mariadb
-    container_name: maria
-
-    #image: mariadb
-
-    restart: always #?
-    ports:
-      - 3306:3306
-    env_file: .env
-    environment:
-      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
-      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
-      MYSQL_DATABASE: '${MYSQL_DATABASE}'
-      MYSQL_USER: '${MYSQL_USER}'
-
-    volumes:
-      - wp_db:/var/lib/mysql
-    networks:
-      - inception
-
-
-###############from tutorial
-#  phpmyadmin:
-#    depends_on:
-#      - mariadb
-#    image: phpmyadmin/phpmyadmin
-#    restart: always
-#    ports:
-#      - 8081:80
-#    env_file: .env
-#    environment:
-#      PMA_HOST: mariadb
-#      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
-#    networks:
-#      - inception
-#################
 
 networks: #allowed?
   inception:

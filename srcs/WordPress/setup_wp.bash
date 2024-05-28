@@ -1,9 +1,11 @@
 #!/bin/bash
+#making directory for volume if it doesn't exist
 if ! [ -d "/var/www/html" ]; then
     mkdir /var/www/html
     echo "made /var/www/html"
 fi
 
+#installing wordpress if it isn't installed
 if ! [ -d "/var/www/html/wordpress" ]; then
     wget -q -P /var/www/html/ http://wordpress.org/latest.tar.gz
     tar xfz /var/www/html/latest.tar.gz -C /var/www/html/
@@ -12,8 +14,26 @@ if ! [ -d "/var/www/html/wordpress" ]; then
     echo "downloaded wordpress"
 fi
 
+#copying modified wp-config.php file if it isn't already there
 if ! [ -f "/var/www/html/wordpress/wp-config.php" ]; then
     cp wp-config.php /var/www/html/wordpress
+    echo "copied wp-config.php"
 fi
 
+#installing wp-cli if it isn't installed already
+if ! [ -f "/usr/local/bin/wp/wp-cli.phar" ]; then
+    curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    chmod +x wp-cli.phar
+    mv wp-cli.phar /usr/local/bin/wp
+    wp core install --allow-root --path=/var/www/html/wordpress \
+        --url=http://aplank.42.fr:443 \
+        --title="Your Site Title" \
+        --admin_user=${MYSQL_USER} \
+        --admin_password=a${MYSQL_ROOT_PASSWORD} \
+        --admin_email=${MYSQL_USER}@example.com
+    echo "installed wp-cli"
+fi
+
+sleep 5 #probably not allowed? --> healthcheck in docker-compose
+echo "starting wp"
 /usr/sbin/php-fpm8.2 -F
