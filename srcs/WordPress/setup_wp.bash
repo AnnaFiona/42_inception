@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 #making directory for volume if it doesn't exist
 if ! [ -d "/var/www/html" ]; then
     mkdir /var/www/html
@@ -25,15 +26,26 @@ if ! [ -f "/usr/local/bin/wp/wp-cli.phar" ]; then
     curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
     chmod +x wp-cli.phar
     mv wp-cli.phar /usr/local/bin/wp
-    wp core install --allow-root --path=/var/www/html/wordpress \
-        --url=http://aplank.42.fr:443 \
-        --title="Your Site Title" \
-        --admin_user=${MYSQL_USER} \
-        --admin_password=a${MYSQL_ROOT_PASSWORD} \
-        --admin_email=${MYSQL_USER}@example.com
     echo "installed wp-cli"
 fi
 
-sleep 5 #probably not allowed? --> healthcheck in docker-compose
+#doing wp core install and adding admin wp user if not done already
+if ! wp user get "${MYSQL_ADMIN_USER}" --quiet --allow-root --path=/var/www/html/wordpress; then
+    wp core install --allow-root --path=/var/www/html/wordpress \
+        --url=http://aplank.42.fr:443 \
+        --title="Site Title" \
+        --admin_user=${MYSQL_ADMIN_USER} \
+        --admin_password=a${MYSQL_ADMIN_PASSWORD} \
+        --admin_email=${MYSQL_ADMIN_USER}@example.com
+    echo "did wp core install (made wp admin)"
+fi
+
+#adding normal wp user if not already there
+if ! wp user get "${MYSQL_USER}" --quiet --allow-root --path=/var/www/html/wordpress; then
+    wp user create "${MYSQL_USER}" ${MYSQL_USER}@example.com --allow-root --path=/var/www/html/wordpress
+    echo "made wp user"
+fi
+
+#sleep 5 #probably not allowed? --> healthcheck in docker-compose
 echo "starting wp"
 /usr/sbin/php-fpm8.2 -F

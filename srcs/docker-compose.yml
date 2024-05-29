@@ -13,10 +13,11 @@ services:
       - 3306:3306
     env_file: .env
     environment:
-      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
-      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
       MYSQL_DATABASE: '${MYSQL_DATABASE}'
+      MYSQL_ADMIN_USER: '${MYSQL_ADMIN_USER}'
+      MYSQL_ADMIN_PASSWORD: '${MYSQL_ADMIN_PASSWORD}'
       MYSQL_USER: '${MYSQL_USER}'
+      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
 
     volumes:
       - wp_db:/var/lib/mysql
@@ -39,8 +40,8 @@ services:
     environment:
       WORDPRESS_DB_HOST: mariadb:3306
       WORDPRESS_DB_NAME: '${MYSQL_DATABASE}'
-      WORDPRESS_DB_USER: '${MYSQL_USER}'
-      WORDPRESS_DB_PASSWORD: '${MYSQL_PASSWORD}'
+      WORDPRESS_DB_USER: '${MYSQL_ADMIN_USER}'
+      WORDPRESS_DB_PASSWORD: '${MYSQL_ADMIN_PASSWORD}'
     volumes:
       - wp_website_files:/var/www/html
     networks: 
@@ -58,11 +59,11 @@ services:
     ports:
       - 443:80
     env_file: .env
-    environment:
-      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
+    environment: #needed?
+      MYSQL_ADMIN_PASSWORD: '${MYSQL_ADMIN_PASSWORD}'
       MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
       MYSQL_DATABASE: '${MYSQL_DATABASE}'
-      MYSQL_USER: '${MYSQL_USER}'
+      MYSQL_ADMIN_USER: '${MYSQL_ADMIN_USER}'
     volumes:
       - wp_website_files:/var/www/html
     networks:
