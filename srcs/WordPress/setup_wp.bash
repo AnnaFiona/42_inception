@@ -32,7 +32,7 @@ fi
 #doing wp core install and adding admin wp user if not done already
 if ! wp user get "${MYSQL_ADMIN_USER}" --quiet --allow-root --path=/var/www/html/wordpress; then
     wp core install --allow-root --path=/var/www/html/wordpress \
-        --url=http://aplank.42.fr:443 \
+        --url=https://aplank.42.fr \
         --title="Site Title" \
         --admin_user=${MYSQL_ADMIN_USER} \
         --admin_password=a${MYSQL_ADMIN_PASSWORD} \
