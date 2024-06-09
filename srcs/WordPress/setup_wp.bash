@@ -1,5 +1,6 @@
 #!/bin/bash
-set -e
+set -e #?
+
 #making directory for volume if it doesn't exist
 if ! [ -d "/var/www/html" ]; then
     mkdir /var/www/html

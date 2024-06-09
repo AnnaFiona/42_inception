@@ -3,16 +3,13 @@ FROM debian:12.5
 RUN apt-get -qq update
 RUN apt-get install -yqq nginx nano openssl
 
-#index.html isn't in volume?
-COPY index.html /var/www/html 
-COPY useless.conf /etc/nginx/conf.d
-COPY aplank.42.fr.conf /etc/nginx/conf.d
+COPY aplank.42.fr.conf /etc/nginx/sites-available
 COPY nginx.conf /etc/nginx
 COPY setup_ssl-tls.bash .
 
 RUN chmod 777 setup_ssl-tls.bash
+RUN ln -s /etc/nginx/sites-available/aplank.42.fr.conf /etc/nginx/sites-enabled/aplank.42.fr.conf
 
-EXPOSE 443 80
+EXPOSE 443
 
 ENTRYPOINT [ "./setup_ssl-tls.bash" ]
-#CMD ["nginx", "-g", "daemon off;"]

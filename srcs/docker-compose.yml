@@ -56,7 +56,6 @@ services:
     restart: always
     ports:
       - 443:443
-      - 80:80
     env_file: .env
     environment: #needed?
       MYSQL_ADMIN_PASSWORD: '${MYSQL_ADMIN_PASSWORD}'
@@ -73,5 +72,9 @@ networks: #allowed?
     driver: bridge
 
 volumes:
-  wp_website_files:  #needs to be in a folder (subject!!!) in host machine (vm)?!
-  wp_db: #mariadb    #needs to be in a folder (subject!!!) in host machine (vm)?!
+  wp_website_files:
+    driver_opts:
+      device: '/home/login/data/wp_website_files' #change login to aplank!!!!?
+  wp_db: #mariadb
+    driver_opts:
+      device: '/home/login/data/wp_db' #change login to aplank!!!!?
