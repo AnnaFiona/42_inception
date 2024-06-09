@@ -1,16 +1,11 @@
 up:
-	docker compose up
+	docker compose -f ./srcs/docker-compose.yml up
 
 down:
-	docker compose down
+	docker compose -f ./srcs/docker-compose.yml  down
 
 build:
-	docker compose build
-
-
-
-mb:
-	docker build -t annafiona/mariadb ./MariaDB
+	docker compose -f ./srcs/docker-compose.yml  build
 
 rmv:
 	docker volume rm srcs_wp_db srcs_wp_website_files
