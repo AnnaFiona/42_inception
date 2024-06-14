@@ -18,7 +18,9 @@ services:
       MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
 
     volumes:
-      - wp_db:/var/lib/mysql
+      - type: bind
+        source: /home/aplank/data/wp_db
+        target: /var/www/html
     networks:
       - inception
 
@@ -40,8 +42,11 @@ services:
       WORDPRESS_DB_NAME: '${MYSQL_DATABASE}'
       WORDPRESS_DB_USER: '${MYSQL_ADMIN_USER}'
       WORDPRESS_DB_PASSWORD: '${MYSQL_ADMIN_PASSWORD}'
+
     volumes:
-      - wp_website_files:/var/www/html
+      - type: bind
+        source: /home/aplank/data/wp_website_files
+        target: /var/www/html
     networks: 
       - inception
 
@@ -62,19 +67,14 @@ services:
       MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
       MYSQL_DATABASE: '${MYSQL_DATABASE}'
       MYSQL_ADMIN_USER: '${MYSQL_ADMIN_USER}'
+
     volumes:
-      - wp_website_files:/var/www/html
+      - type: bind
+        source: /home/aplank/data/wp_website_files
+        target: /var/www/html
     networks:
       - inception
 
-networks: #allowed?
+networks:
   inception:
     driver: bridge
-
-volumes:
-  wp_website_files:
-    driver_opts:
-      device: '/home/login/data/wp_website_files' #change login to aplank!!!!?
-  wp_db: #mariadb
-    driver_opts:
-      device: '/home/login/data/wp_db' #change login to aplank!!!!?
