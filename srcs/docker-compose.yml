@@ -13,10 +13,12 @@ services:
     environment:
       MYSQL_DATABASE: '${MYSQL_DATABASE}'
       MYSQL_ADMIN_USER: '${MYSQL_ADMIN_USER}'
-      MYSQL_ADMIN_PASSWORD: '${MYSQL_ADMIN_PASSWORD}'
+   #   MYSQL_ADMIN_PASSWORD: '${MYSQL_ADMIN_PASSWORD}'
       MYSQL_USER: '${MYSQL_USER}'
-      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
-
+    #  MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
+    secrets:
+      - admin_pw
+      - user_pw
     volumes:
       - type: bind
         source: /home/aplank/data/wp_db
@@ -41,8 +43,10 @@ services:
       WORDPRESS_DB_HOST: mariadb:3306
       WORDPRESS_DB_NAME: '${MYSQL_DATABASE}'
       WORDPRESS_DB_USER: '${MYSQL_ADMIN_USER}'
-      WORDPRESS_DB_PASSWORD: '${MYSQL_ADMIN_PASSWORD}'
-
+    #  WORDPRESS_DB_PASSWORD: '${MYSQL_ADMIN_PASSWORD}'
+    secrets:
+      - admin_pw
+      - user_pw
     volumes:
       - type: bind
         source: /home/aplank/data/wp_website_files
@@ -63,11 +67,13 @@ services:
       - 443:443
     env_file: .env
     environment: #needed?
-      MYSQL_ADMIN_PASSWORD: '${MYSQL_ADMIN_PASSWORD}'
-      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
+    #  MYSQL_ADMIN_PASSWORD: '${MYSQL_ADMIN_PASSWORD}'
+     # MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
       MYSQL_DATABASE: '${MYSQL_DATABASE}'
       MYSQL_ADMIN_USER: '${MYSQL_ADMIN_USER}'
-
+    secrets:
+      - admin_pw
+      - user_pw
     volumes:
       - type: bind
         source: /home/aplank/data/wp_website_files
@@ -78,3 +84,9 @@ services:
 networks:
   inception:
     driver: bridge
+
+secrets:
+  admin_pw:
+    file: ./../secrets/admin_pw
+  user_pw:
+    file: ./../secrets/user_pw

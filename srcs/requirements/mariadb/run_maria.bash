@@ -1,5 +1,8 @@
 #!/bin/bash
 
+export MYSQL_ADMIN_PASSWORD=$(cat /run/secrets/admin_pw)
+export MYSQL_PASSWORD=$(cat /run/secrets/user_pw)
+
 #mariadb-install-db
 /etc/init.d/mariadb start
 
