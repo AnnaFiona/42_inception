@@ -39,7 +39,7 @@ if ! wp user get "${MYSQL_ADMIN_USER}" --quiet --allow-root --path=/var/www/html
         --url=https://aplank.42.fr \
         --title="Site Title" \
         --admin_user=${MYSQL_ADMIN_USER} \
-        --admin_password=a${MYSQL_ADMIN_PASSWORD} \
+        --admin_password=${MYSQL_ADMIN_PASSWORD} \
         --admin_email=${MYSQL_ADMIN_USER}@example.com
     echo "did wp core install (made wp admin)"
 fi
