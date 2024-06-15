@@ -14,6 +14,3 @@ mariadb -u root -e "FLUSH PRIVILEGES";
 
 /etc/init.d/mariadb stop
 mysqld --user=mysql
-
-
-# if statement if already run?!

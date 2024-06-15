@@ -1,8 +1,5 @@
 #!/bin/bash
 
-export MYSQL_ADMIN_PASSWORD=$(cat /run/secrets/admin_pw)
-export MYSQL_PASSWORD=$(cat /run/secrets/user_pw)
-
 #making ssl-certificates directory if it doesn't exist yet
 if ! [ -d /var/www/html/ssl-certificates/ ]; then
 	mkdir /var/www/html/ssl-certificates/;

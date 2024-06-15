@@ -1,4 +1,3 @@
-version: '3.1'
 services:
 
   mariadb:
@@ -13,9 +12,7 @@ services:
     environment:
       MYSQL_DATABASE: '${MYSQL_DATABASE}'
       MYSQL_ADMIN_USER: '${MYSQL_ADMIN_USER}'
-   #   MYSQL_ADMIN_PASSWORD: '${MYSQL_ADMIN_PASSWORD}'
       MYSQL_USER: '${MYSQL_USER}'
-    #  MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
     secrets:
       - admin_pw
       - user_pw
@@ -43,7 +40,6 @@ services:
       WORDPRESS_DB_HOST: mariadb:3306
       WORDPRESS_DB_NAME: '${MYSQL_DATABASE}'
       WORDPRESS_DB_USER: '${MYSQL_ADMIN_USER}'
-    #  WORDPRESS_DB_PASSWORD: '${MYSQL_ADMIN_PASSWORD}'
     secrets:
       - admin_pw
       - user_pw
@@ -65,15 +61,6 @@ services:
     restart: always
     ports:
       - 443:443
-    env_file: .env
-    environment: #needed?
-    #  MYSQL_ADMIN_PASSWORD: '${MYSQL_ADMIN_PASSWORD}'
-     # MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
-      MYSQL_DATABASE: '${MYSQL_DATABASE}'
-      MYSQL_ADMIN_USER: '${MYSQL_ADMIN_USER}'
-    secrets:
-      - admin_pw
-      - user_pw
     volumes:
       - type: bind
         source: /home/aplank/data/wp_website_files
