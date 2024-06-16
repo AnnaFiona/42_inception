@@ -10,8 +10,4 @@ COPY 50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 EXPOSE 3306
 
-#HEALTHCHECK --start-period=5m \
-#  CMD mariadb -e 'SELECT @@datadir;' || exit 1
-
 ENTRYPOINT ["./run_maria.bash"]
-#CMD ["mariadb"]

@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e #?
 
+#exporting secrets
 export MYSQL_ADMIN_PASSWORD=$(cat /run/secrets/admin_pw)
 export MYSQL_PASSWORD=$(cat /run/secrets/user_pw)
 
@@ -50,6 +51,5 @@ if ! wp user get "${MYSQL_USER}" --quiet --allow-root --path=/var/www/html/wordp
     echo "made wp user"
 fi
 
-#sleep 5 #probably not allowed? --> healthcheck in docker-compose
 echo "starting wp"
 /usr/sbin/php-fpm8.2 -F
