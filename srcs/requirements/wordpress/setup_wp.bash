@@ -3,7 +3,7 @@ set -e #?
 
 #exporting secrets
 export MYSQL_ADMIN_PASSWORD=$(cat /run/secrets/admin_pw)
-export MYSQL_PASSWORD=$(cat /run/secrets/user_pw)
+export MYSQL_USER_PASSWORD=$(cat /run/secrets/user_pw)
 
 #making directory for volume if it doesn't exist
 if ! [ -d "/var/www/html" ]; then
@@ -47,7 +47,7 @@ fi
 
 #adding normal wp user if not already there
 if ! wp user get "${MYSQL_USER}" --quiet --allow-root --path=/var/www/html/wordpress; then
-    wp user create "${MYSQL_USER}" ${MYSQL_USER}@example.com --allow-root --path=/var/www/html/wordpress
+    wp user create "${MYSQL_USER}" ${MYSQL_USER}@example.com --user_pass=${MYSQL_USER_PASSWORD} --allow-root --path=/var/www/html/wordpress
     echo "made wp user"
 fi
 

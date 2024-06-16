@@ -2,7 +2,7 @@
 
 #exporting secrets
 export MYSQL_ADMIN_PASSWORD=$(cat /run/secrets/admin_pw)
-export MYSQL_PASSWORD=$(cat /run/secrets/user_pw)
+export MYSQL_USER_PASSWORD=$(cat /run/secrets/user_pw)
 
 /etc/init.d/mariadb start
 
