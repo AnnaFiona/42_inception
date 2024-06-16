@@ -74,6 +74,6 @@ networks:
 
 secrets:
   admin_pw:
-    file: ./../secrets/admin_pw
+    file: ./../secrets/admin_pw.txt
   user_pw:
-    file: ./../secrets/user_pw
+    file: ./../secrets/user_pw.txt
