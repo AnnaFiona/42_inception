@@ -1,4 +1,4 @@
-FROM debian:12.5
+FROM debian:bullseye
 
 RUN apt-get -qq update
 RUN apt-get install -yqq mariadb-server

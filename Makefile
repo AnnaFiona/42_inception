@@ -15,3 +15,5 @@ sysprune:
 	docker system prune
 
 fclean: down sysprune rmv
+
+new: fclean build up

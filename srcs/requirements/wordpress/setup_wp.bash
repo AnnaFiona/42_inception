@@ -56,5 +56,9 @@ if ! wp user get "${MYSQL_USER}" --quiet --allow-root --path=/var/www/html/wordp
     echo "* made wp user"
 fi
 
+if ! [ -d "/run/php" ]; then
+    mkdir /run/php
+fi
+
 echo "* starting wp"
-/usr/sbin/php-fpm8.2 -F
+/usr/sbin/php-fpm7.4 -F
