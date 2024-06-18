@@ -2,12 +2,10 @@ services:
 
   mariadb:
     build: ./requirements/mariadb/
-    image: annafiona/mariadb
+#    image: annafiona/mariadb
     container_name: maria
 
     restart: always
-    ports:
-      - 3306:3306
     env_file: .env
     environment:
       MYSQL_DATABASE: '${MYSQL_DATABASE}'
@@ -29,17 +27,15 @@ services:
       - mariadb
 
     build: ./requirements/wordpress/
-    image: annafiona/wordpress
+#    image: annafiona/wordpress
     container_name: wordpress
 
     restart: always
-    ports:
-      - 9000:9000
     env_file: .env
     environment:
-      WORDPRESS_DB_HOST: mariadb:3306
-      WORDPRESS_DB_NAME: '${MYSQL_DATABASE}'
-      WORDPRESS_DB_USER: '${MYSQL_ADMIN_USER}'
+      MYSQL_DATABASE_HOST: '${MYSQL_DATABASE_HOST}'
+      MYSQL_DATABASE: '${MYSQL_DATABASE}'
+      MYSQL_ADMIN_USER: '${MYSQL_ADMIN_USER}'
     secrets:
       - admin_pw
       - user_pw
@@ -55,7 +51,7 @@ services:
     depends_on:
       - wordpress
     build: ./requirements/nginx/
-    image: annafiona/nginx
+#    image: annafiona/nginx
     container_name: nginx
 
     restart: always

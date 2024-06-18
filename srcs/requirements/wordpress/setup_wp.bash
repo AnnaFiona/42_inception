@@ -20,18 +20,23 @@ if ! [ -d "/var/www/html/wordpress" ]; then
     echo "* downloaded wordpress"
 fi
 
-#copying modified wp-config.php file if it isn't already there
-if ! [ -f "/var/www/html/wordpress/wp-config.php" ]; then
-    cp wp-config.php /var/www/html/wordpress
-    echo "* copied wp-config.php"
-fi
-
 #installing wp-cli if it isn't installed already
 if ! [ -f "/usr/local/bin/wp/wp-cli.phar" ]; then
-    curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    wget -q https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
     chmod +x wp-cli.phar
     mv wp-cli.phar /usr/local/bin/wp
     echo "* installed wp-cli"
+fi
+
+#creating wp-config.php file if it isn't already there
+if ! [ -f "/var/www/html/wordpress/wp-config.php" ]; then
+    wp config create --quiet --allow-root --path=/var/www/html/wordpress \
+        --dbname=${MYSQL_DATABASE} \
+        --dbuser=${MYSQL_ADMIN_USER} \
+        --dbpass=${MYSQL_ADMIN_PASSWORD} \
+        --dbhost=${MYSQL_DATABASE_HOST} \
+        --dbprefix=wp_ 
+    echo "* created wp-config.php"
 fi
 
 #doing wp core install and adding admin wp user if not done already

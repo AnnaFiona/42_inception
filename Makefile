@@ -7,9 +7,11 @@ down:
 build:
 	docker compose -f ./srcs/docker-compose.yml  build
 
+rmv:
+	sudo rm -rf /home/aplank/data/wp_website_files /home/aplank/data/wp_db
+	sudo mkdir /home/aplank/data/wp_website_files /home/aplank/data/wp_db
+
 sysprune:
 	docker system prune
 
-fclean: down sysprune
-	docker rmi annafiona/mariadb annafiona/nginx annafiona/wordpress
-	make down
+fclean: down sysprune rmv
