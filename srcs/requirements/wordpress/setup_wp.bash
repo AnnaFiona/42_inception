@@ -1,9 +1,5 @@
 #!/bin/bash
-set -e #?
-
-#exporting secrets
-export MYSQL_ADMIN_PASSWORD=$(cat /run/secrets/admin_pw)
-export MYSQL_USER_PASSWORD=$(cat /run/secrets/user_pw)
+set -e
 
 #making directory for volume if it doesn't exist
 if ! [ -d "/var/www/html" ]; then

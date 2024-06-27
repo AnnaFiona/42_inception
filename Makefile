@@ -9,6 +9,7 @@ build:
 
 rmv:
 	docker volume rm srcs_wp_website_files srcs_wp_db
+	sudo rm -rf /home/aplank/data/*
 
 sysprune:
 	docker system prune

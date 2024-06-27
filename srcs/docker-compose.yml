@@ -2,17 +2,9 @@ services:
 
   mariadb:
     build: ./requirements/mariadb/
-    container_name: maria
-
+    container_name: mariadb
     restart: always
     env_file: .env
-    environment:
-      MYSQL_DATABASE: '${MYSQL_DATABASE}'
-      MYSQL_ADMIN_USER: '${MYSQL_ADMIN_USER}'
-      MYSQL_USER: '${MYSQL_USER}'
-    secrets:
-      - admin_pw
-      - user_pw
     volumes:
       - wp_db:/var/www/html
     networks:
@@ -22,19 +14,10 @@ services:
   wordpress:
     depends_on:
       - mariadb
-
     build: ./requirements/wordpress/
     container_name: wordpress
-
     restart: always
     env_file: .env
-    environment:
-      MYSQL_DATABASE_HOST: '${MYSQL_DATABASE_HOST}'
-      MYSQL_DATABASE: '${MYSQL_DATABASE}'
-      MYSQL_ADMIN_USER: '${MYSQL_ADMIN_USER}'
-    secrets:
-      - admin_pw
-      - user_pw
     volumes:
       - wp_website_files:/var/www/html
     networks: 
@@ -46,7 +29,6 @@ services:
       - wordpress
     build: ./requirements/nginx/
     container_name: nginx
-
     restart: always
     ports:
       - 443:443
@@ -72,9 +54,3 @@ volumes:
       type: none
       o: bind
       device: /home/aplank/data
-
-secrets:
-  admin_pw:
-    file: ./../secrets/admin_pw.txt
-  user_pw:
-    file: ./../secrets/user_pw.txt
