@@ -14,9 +14,7 @@ services:
       - admin_pw
       - user_pw
     volumes:
-      - type: bind
-        source: /home/aplank/data/wp_db
-        target: /var/www/html
+      - wp_db:/var/www/html
     networks:
       - inception
 
@@ -38,9 +36,7 @@ services:
       - admin_pw
       - user_pw
     volumes:
-      - type: bind
-        source: /home/aplank/data/wp_website_files
-        target: /var/www/html
+      - wp_website_files:/var/www/html
     networks: 
       - inception
 
@@ -55,15 +51,27 @@ services:
     ports:
       - 443:443
     volumes:
-      - type: bind
-        source: /home/aplank/data/wp_website_files
-        target: /var/www/html
+      - wp_website_files:/var/www/html
     networks:
       - inception
 
 networks:
   inception:
     driver: bridge
+
+volumes: 
+  wp_db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/aplank/data/
+  wp_website_files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/aplank/data
 
 secrets:
   admin_pw:

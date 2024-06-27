@@ -8,8 +8,7 @@ build:
 	docker compose -f ./srcs/docker-compose.yml  build
 
 rmv:
-	sudo rm -rf /home/aplank/data/wp_website_files /home/aplank/data/wp_db
-	sudo mkdir /home/aplank/data/wp_website_files /home/aplank/data/wp_db
+	docker volume rm srcs_wp_website_files srcs_wp_db
 
 sysprune:
 	docker system prune
