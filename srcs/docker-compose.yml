@@ -6,7 +6,7 @@ services:
     restart: always
     env_file: .env
     volumes:
-      - wp_db:/var/www/html
+      - wp_db:/var/lib/mysql
     networks:
       - inception
 
