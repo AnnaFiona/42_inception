@@ -36,17 +36,20 @@ if ! [ -f "/var/www/html/wordpress/wp-config.php" ]; then
 fi
 
 #doing wp core install and adding admin wp user if not done already
+#the if displayes error, but it's just to check if we need to do core install so it is expected
 if ! wp user get "${MYSQL_ADMIN_USER}" --quiet --allow-root --path=/var/www/html/wordpress; then
     wp core install --allow-root --path=/var/www/html/wordpress \
         --url=https://aplank.42.fr \
         --title="Site Title" \
         --admin_user=${MYSQL_ADMIN_USER} \
         --admin_password=${MYSQL_ADMIN_PASSWORD} \
-        --admin_email=${MYSQL_ADMIN_USER}@example.com
+        --admin_email=${MYSQL_ADMIN_USER}@example.com \
+        --skip-email
     echo "* did wp core install (made wp admin)"
 fi
 
 #adding normal wp user if not already there
+#the if displayes error, but it's just to check if the user exists so it is expected
 if ! wp user get "${MYSQL_USER}" --quiet --allow-root --path=/var/www/html/wordpress; then
     wp user create "${MYSQL_USER}" ${MYSQL_USER}@example.com --user_pass=${MYSQL_USER_PASSWORD} --allow-root --path=/var/www/html/wordpress
     echo "* made wp user"
